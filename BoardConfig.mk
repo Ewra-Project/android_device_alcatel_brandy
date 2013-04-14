@@ -16,7 +16,12 @@
 
 # This variable is set first, so it can be overridden
 # by BoardConfigVendor.mk
-USE_CAMERA_STUB := true
+
+# Camera
+USE_CAMERA_STUB := false
+COMMON_GLOBAL_CFLAGS += -DBINDER_COMPAT
+BOARD_USE_NASTY_PTHREAD_CREATE_HACK := true
+BOARD_USES_LEGACY_OVERLAY := true
 
 # inherit from the proprietary version
 -include vendor/alcatel/brandy/BoardConfigVendor.mk

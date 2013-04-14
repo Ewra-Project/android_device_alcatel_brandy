@@ -13,6 +13,14 @@ on init
 # Backwards Compat - XXX: Going away in G*
     symlink /mnt/sdcard /sdcard
 
+# Add permissions for camera access
+    chmod 0666 /dev/msm_camera/config0
+    chmod 0666 /dev/msm_camera/config1
+    chmod 0666 /dev/msm_camera/control0
+    chmod 0666 /dev/msm_camera/control1
+    chmod 0666 /dev/msm_camera/frame0
+    chmod 0666 /dev/msm_camera/frame1
+
     mkdir /sd-ext 0771 system system
 
     mkdir /custpack

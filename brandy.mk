@@ -91,16 +91,15 @@ PRODUCT_PACKAGES += \
     audio.a2dp.default \
     libaudioutils
 
-# Camera
-PRODUCT_PACKAGES += \
-    libcamera \
-    camera.brandy
-
 # Display
 PRODUCT_PACKAGES += \
     gralloc.msm7x27 \
     copybit.msm7x27 \
     hwcomposer.msm7x27
+
+# Camera
+PRODUCT_PACKAGES += \
+    camera.msm7x27
 
 # Misc
 PRODUCT_PACKAGES += \
@@ -119,6 +118,7 @@ PRODUCT_PACKAGES += \
     libstagefrighthw
 
 PRODUCT_PROPERTY_OVERRIDES += \
+    ro.product.camera=msm7x27 \
     dalvik.vm.lockprof.threshold=500 \
     dalvik.vm.dexopt-flags=m=y
 
