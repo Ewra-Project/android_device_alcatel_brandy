@@ -16,12 +16,7 @@
 
 # This variable is set first, so it can be overridden
 # by BoardConfigVendor.mk
-
-# Camera
-USE_CAMERA_STUB := false
-COMMON_GLOBAL_CFLAGS += -DBINDER_COMPAT
-BOARD_USE_NASTY_PTHREAD_CREATE_HACK := true
-BOARD_USES_LEGACY_OVERLAY := true
+USE_CAMERA_STUB := true
 
 # inherit from the proprietary version
 -include vendor/alcatel/brandy/BoardConfigVendor.mk
@@ -68,6 +63,11 @@ WIFI_EXT_MODULE_NAME := "librasdioif"
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
+
+# Camera
+COMMON_GLOBAL_CFLAGS += -DBINDER_COMPAT
+BOARD_USE_NASTY_PTHREAD_CREATE_HACK := true
+BOARD_USES_LEGACY_OVERLAY := true
 
 # GPS
 BOARD_USES_QCOM_GPS := true

@@ -91,15 +91,15 @@ PRODUCT_PACKAGES += \
     audio.a2dp.default \
     libaudioutils
 
+# Camera
+PRODUCT_PACKAGES += \
+    camera.msm7x27
+
 # Display
 PRODUCT_PACKAGES += \
     gralloc.msm7x27 \
     copybit.msm7x27 \
     hwcomposer.msm7x27
-
-# Camera
-PRODUCT_PACKAGES += \
-    camera.msm7x27
 
 # Misc
 PRODUCT_PACKAGES += \
