@@ -1,0 +1,3 @@
+[submodule "CMFileManager"]
+	path = CMFileManager
+	url = https://github.com/mcrosson/android_packages_apps_CMFileManager.git
