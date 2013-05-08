@@ -106,8 +106,6 @@ PRODUCT_PACKAGES += \
     gps.brandy \
     lights.msm7x27 \
     bdaddr_read \
-    CMFileManager \
-    CMFileManagerThemes \
     com.android.future.usb.accessory \
     Torch
 
