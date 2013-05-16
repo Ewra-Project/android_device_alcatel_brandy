@@ -4,15 +4,6 @@
 # RIL
 rild.libpath=/system/lib/libril-qc-1.so
 rild.libargs=-d /dev/smd0
-persist.rild.nitz_plmn=
-persist.rild.nitz_long_ons_0=
-persist.rild.nitz_long_ons_1=
-persist.rild.nitz_long_ons_2=
-persist.rild.nitz_long_ons_3=
-persist.rild.nitz_short_ons_0=
-persist.rild.nitz_short_ons_1=
-persist.rild.nitz_short_ons_2=
-persist.rild.nitz_short_ons_3=
 ro.telephony.ril.v3=icccardstatus,datacall,signalstrength,facilitylock
 ro.telephony.default_network=0
 ro.telephony.call_ring.multiple=false
@@ -20,6 +11,7 @@ ro.telephony.call_ring.delay=3000
 
 # WiFi
 wifi.interface=wlan0
+wifi.supplicant_scan_interval=180
 
 # Graphics
 com.qc.hardware=true
@@ -32,5 +24,5 @@ persist.sys.usb.config=mass_storage,adb
 persist.service.adb.enable=1
 
 # Dalviks
-#dalvik.vm.dexopt-data-only=1
+dalvik.vm.dexopt-data-only=1
 dalvik.vm.execution-mode=int:jit

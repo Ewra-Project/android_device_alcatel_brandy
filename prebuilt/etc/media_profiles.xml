@@ -70,6 +70,10 @@
 <!ELEMENT AudioDecoderCap EMPTY>
 <!ATTLIST AudioDecoderCap name (wma) #REQUIRED>
 <!ATTLIST AudioDecoderCap enabled (true|false) #REQUIRED>
+<!ELEMENT ExportVideoProfile EMPTY>
+<!ATTLIST ExportVideoProfile name (h264|h263|m4v) #REQUIRED>
+<!ATTLIST ExportVideoProfile profile CDATA #REQUIRED>
+<!ATTLIST ExportVideoProfile level CDATA #REQUIRED>
 ]>
 <!--
      This file is used to declare the multimedia profiles and capabilities
@@ -86,15 +90,15 @@
                    height="240"
                    frameRate="25" />
 
-            <Audio codec="amrnb"
-                   bitRate="23450"
-                   sampleRate="8000"
-                   channels="1" />
+            <Audio codec="aac"
+                   bitRate="128000"
+                   sampleRate="44100"
+                   channels="2" />
         </EncoderProfile>
 
         <EncoderProfile quality="low" fileFormat="3gp" duration="30">
             <Video codec="m4v"
-                   bitRate="161000"
+                   bitRate="256000"
                    width="176"
                    height="144"
                    frameRate="15" />
@@ -106,12 +110,12 @@
 
         </EncoderProfile>
 
+        <ImageEncoding quality="100" />
         <ImageEncoding quality="90" />
         <ImageEncoding quality="80" />
-        <ImageEncoding quality="70" />
         <ImageDecoding memCap="20000000" />
 
-        <Camera previewFrameRate="0" />
+        <Camera previewFrameRate="15" />
 
     </CamcorderProfiles>
 
@@ -147,10 +151,10 @@
         minSampleRate="8000" maxSampleRate="8000"
         minChannels="1" maxChannels="1" />
 
-    <AudioEncoderCap name="aac" enabled="true"
-        minBitRate="5525" maxBitRate="62900"
-        minSampleRate="8000" maxSampleRate="48000"
-        minChannels="1" maxChannels="1" />
+     <AudioEncoderCap name="aac" enabled="true"
+        minBitRate="8192" maxBitRate="128000"
+        minSampleRate="16000" maxSampleRate="44100"
+        minChannels="1" maxChannels="2" />
 
     <!--
         FIXME:
@@ -159,6 +163,6 @@
         for TEST applications. For other applications, we do
         not perform any checks at all.
     -->
-    <VideoDecoderCap name="wmv" enabled="false"/>
-    <AudioDecoderCap name="wma" enabled="false"/>
+    <VideoDecoderCap name="wmv" enabled="true"/>
+    <AudioDecoderCap name="wma" enabled="true"/>
 </MediaSettings>

@@ -18,14 +18,14 @@ int main() {
     	count = sprintf(bdaddr, "%02.2s:%02.2s:%02.2s:%02.2s:%02.2s:%02.2s\0",
     	                tmpbdaddr,tmpbdaddr+2,tmpbdaddr+4,tmpbdaddr+6,tmpbdaddr+8,tmpbdaddr+10);
 	} else {
-	    LOGE("Can't read btaddr from service.brcm.bt.mac.\n");
+	    ALOGE("Can't read btaddr from service.brcm.bt.mac.\n");
 	    return -1;
 	}
 	int fd;
 	fd = open(BDADDR_PATH, O_WRONLY|O_CREAT|O_TRUNC, 00600|00060|00006);
 	if(fd < 0) {
 	    fprintf(stderr, "open(%s) failed\n", BDADDR_PATH);
-		LOGE("Can't open %s\n", BDADDR_PATH);
+		ALOGE("Can't open %s\n", BDADDR_PATH);
 		return -2;
 	}
 	write(fd, bdaddr, 18);

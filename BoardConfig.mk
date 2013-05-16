@@ -38,6 +38,7 @@ COMMON_GLOBAL_CFLAGS += -DTARGET_MSM7x27
 # Try build from source
 TARGET_KERNEL_SOURCE := kernel/alcatel/brandy
 TARGET_KERNEL_CONFIG := cyanogen_brandy_defconfig
+TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.4.3
 # if not present - use prebuilt
 TARGET_PREBUILT_KERNEL := device/alcatel/brandy/kernel
 
@@ -50,8 +51,6 @@ WPA_SUPPLICANT_VERSION := VER_0_8_X
 BOARD_WPA_SUPPLICANT_DRIVER := WEXT
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_wext
 BOARD_WLAN_DEVICE := bcm4329
-#BOARD_HOSTAPD_DRIVER := WEXT
-#BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_wext
 WIFI_DRIVER_MODULE_PATH := "/system/lib/modules/bcm4329.ko"
 WIFI_DRIVER_FW_PATH_STA := "/system/etc/wifi/fw_bcm4329.bin"
 WIFI_DRIVER_FW_PATH_AP := "/system/etc/wifi/fw_bcm4329_apsta.bin"
@@ -67,7 +66,7 @@ BOARD_HAVE_BLUETOOTH_BCM := true
 # Camera
 COMMON_GLOBAL_CFLAGS += -DBINDER_COMPAT -DUSE_GETBUFFERINFO
 BOARD_USE_NASTY_PTHREAD_CREATE_HACK := true
-BOARD_USES_LEGACY_OVERLAY := true
+#BOARD_USES_LEGACY_OVERLAY := true
 
 # GPS
 BOARD_USES_QCOM_GPS := true
@@ -83,7 +82,8 @@ COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE -DQCOM_LEGACY_OMX
 BOARD_EGL_CFG := device/alcatel/brandy/prebuilt/egl.cfg
 BOARD_ADRENO_DECIDE_TEXTURE_TARGET := true
 USE_OPENGL_RENDERER := true
-TARGET_USES_GENLOCK := true
+#TARGET_USES_GENLOCK := true
+TARGET_NO_HW_VSYNC := true
 COMMON_GLOBAL_CFLAGS += -DREFRESH_RATE=60
 
 # Legacy ts support
@@ -94,11 +94,11 @@ JS_ENGINE := v8
 HTTP := chrome
 WITH_JIT := true
 ENABLE_JSC_JIT := true
-ENABLE_WEBGL := true
+#ENABLE_WEBGL := true
 TARGET_FORCE_CPU_UPLOAD := true
 
 # Libs
-TARGET_PROVIDES_LIBLIGHTS := true
+#TARGET_PROVIDES_LIBLIGHT := true
 BOARD_PROVIDES_LIBRIL := true
 
 # Recovery
