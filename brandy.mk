@@ -56,7 +56,8 @@ PRODUCT_COPY_FILES += \
 
 # Bluetooth
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/etc/init.qcom.bt.sh:system/etc/init.qcom.bt.sh
+    $(LOCAL_PATH)/prebuilt/etc/init.qcom.bt.sh:system/etc/init.qcom.bt.sh \
+    system/bluetooth/data/main.le.conf:system/etc/bluetooth/main.conf
 
 # Configs
 PRODUCT_COPY_FILES += \
@@ -100,8 +101,12 @@ PRODUCT_PACKAGES += \
 
 # Display
 PRODUCT_PACKAGES += \
+    libgenlock \
+    libmemalloc \
+    liboverlay \
+    libqdutils \
     gralloc.msm7x27 \
-    copybit.msm7x27 \
+    copybit.msm7x27
 #    hwcomposer.msm7x27
 
 # Misc
@@ -122,6 +127,29 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.product.camera=msm7x27 \
     dalvik.vm.lockprof.threshold=500 \
     dalvik.vm.dexopt-flags=m=y
+
+# Graphics
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.opengles.surface.rgb565=true \
+    debug.enabletr=false \
+    debug.hwui.render_dirty_regions=false \
+    debug.qctwa.statusbar=1 \
+    debug.qctwa.preservebuf=1 \
+    hwui.print_config=choice \
+    persist.sys.strictmode.visual=false
+
+# Stagefright
+PRODUCT_PROPERTY_OVERRIDES += \
+    media.stagefright.enable-player=true \
+    media.stagefright.enable-meta=false \
+    media.stagefright.enable-scan=false \
+    media.stagefright.enable-http=true \
+    media.stagefright.enable-aac=true \
+    media.stagefright.enable-qcp=true
+
+# Camcorder
+PRODUCT_PROPERTY_OVERRIDES += \
+    debug.camcorder.disablemeta=1
 
 $(call inherit-product, build/target/product/full.mk)
 
