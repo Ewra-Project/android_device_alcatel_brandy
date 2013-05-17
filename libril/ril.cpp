@@ -87,9 +87,9 @@ namespace android {
 #define PRINTBUF_SIZE 8096
 
 // Enable RILC log
-#define RILC_LOG 0
+#define RILC_ALOG 0
 
-#if RILC_LOG
+#if RILC_ALOG
     #define startRequest           sprintf(printBuf, "(")
     #define closeRequest           sprintf(printBuf, "%s)", printBuf)
     #define printRequest(token, req)           \
@@ -186,7 +186,7 @@ static UserCallbackInfo *s_last_wake_timeout_info = NULL;
 static void *s_lastNITZTimeData = NULL;
 static size_t s_lastNITZTimeDataSize;
 
-#if RILC_LOG
+#if RILC_ALOG
     static char printBuf[PRINTBUF_SIZE];
 #endif
 
