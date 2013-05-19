@@ -37,8 +37,6 @@
 #include "libhardware/modules/gralloc/gralloc_priv.h"
 #endif
 
-#define LOGV LOGI
-
 struct blitreq {
    unsigned int count;
    struct mdp_blit_req req;
@@ -71,10 +69,10 @@ static hw_module_methods_t camera_module_methods = {
 camera_module_t HAL_MODULE_INFO_SYM = {
    common: {
       tag: HARDWARE_MODULE_TAG,
-      version_major: 1,
-      version_minor: 0,
+      module_api_version: CAMERA_DEVICE_API_VERSION_1_0,
+      hal_api_version: 0,
       id: CAMERA_HARDWARE_MODULE_ID,
-      name: "Camera HAL for ICS",
+      name: "Camera HAL for JB",
       author: "Raviprasad V Mummidi",
       methods: &camera_module_methods,
       dso: NULL,
@@ -238,8 +236,7 @@ CameraHAL_HandlePreviewData(const android::sp<android::IMemory>& dataPtr,
                          GRALLOC_USAGE_SW_READ_OFTEN);
       retVal = mWindow->set_buffers_geometry(mWindow,
                                              previewWidth, previewHeight,
-                                             HAL_PIXEL_FORMAT_YCrCb_420_SP
-                                             );
+                                             HAL_PIXEL_FORMAT_YCrCb_420_SP);
       if (retVal == NO_ERROR) {
          int32_t          stride;
          buffer_handle_t *bufHandle = NULL;
@@ -250,7 +247,7 @@ CameraHAL_HandlePreviewData(const android::sp<android::IMemory>& dataPtr,
             retVal = mWindow->lock_buffer(mWindow, bufHandle);
             if (retVal == NO_ERROR) {
                private_handle_t const *privHandle =
-                   reinterpret_cast<private_handle_t const *>(*bufHandle);
+                  reinterpret_cast<private_handle_t const *>(*bufHandle);
                CameraHAL_CopyBuffers_Hw(mHeap->getHeapID(), privHandle->fd,
                                              offset, privHandle->offset,
                                              previewFormat, previewFormat,
@@ -417,7 +414,7 @@ CameraHAL_FixupParams(android::CameraParameters &settings)
    }
 #endif
 
-    if (!settings.get(android::CameraParameters::KEY_VIDEO_SIZE)) {
+   if (!settings.get(android::CameraParameters::KEY_VIDEO_SIZE)) {
       settings.set("record-size", preferred_size);
       settings.set(android::CameraParameters::KEY_VIDEO_SIZE, preferred_size);
    } else {
@@ -569,7 +566,7 @@ qcamera_start_recording(struct camera_device * device)
    ALOGV("qcamera_start_recording\n");
 /*
    if (qcamera_preview_enabled(device)){
-       LOGD("Preview was enabled");
+       ALOGD("Preview was enabled");
        qcamera_stop_preview(device);
    }
 */
