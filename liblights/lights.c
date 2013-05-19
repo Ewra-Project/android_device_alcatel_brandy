@@ -30,7 +30,7 @@
 #include <sys/ioctl.h>
 #include <sys/types.h>
 
-#include <hardware/lights.h>
+#include "lights.h"
 
 /******************************************************************************/
 
