@@ -112,7 +112,7 @@ PRODUCT_PACKAGES += \
 # Misc
 PRODUCT_PACKAGES += \
     gps.brandy \
-    lights.msm7x27 \
+    lights.brandy \
     bdaddr_read \
     com.android.future.usb.accessory \
     Torch
