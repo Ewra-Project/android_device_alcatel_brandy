@@ -130,6 +130,7 @@ service port-bridge /system/bin/port-bridge /dev/smd0 /dev/ttyGS0
 
 service qmuxd /system/bin/qmuxd
     class main
+    user radio
 
 # Adjust socket buffer to enlarge TCP receive window for high bandwidth
 # but only if ro.data.large_tcp_window_size property is set.
