@@ -1,4 +1,4 @@
-## Specify phone tech before including full_phone
+# Specify phone tech before including full_phone
 $(call inherit-product, vendor/cm/config/gsm.mk)
 
 # Correct bootanimation size for the screen

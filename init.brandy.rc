@@ -3,29 +3,29 @@ import init.brandy.usb.rc
 on init
 # setup the global environment
     export DOWNLOAD_CACHE /cache/download
-    export EXTERNAL_STORAGE /mnt/sdcard
+    export EXTERNAL_STORAGE /storage/sdcard
     export SD_EXT_DIRECTORY /sd-ext
 
 # create mountpoints
-    mkdir /mnt 0775 root system
-    mkdir /mnt/sdcard 0000 system system
+    mkdir /storage 0050 system sdcard_r
+    mkdir /storage/sdcard 0000 system system
 
 # Backwards Compat - XXX: Going away in G*
-    symlink /mnt/sdcard /sdcard
-
-# Add permissions for camera access
-    chmod 0666 /dev/msm_camera/config0
-    chmod 0666 /dev/msm_camera/config1
-    chmod 0666 /dev/msm_camera/control0
-    chmod 0666 /dev/msm_camera/control1
-    chmod 0666 /dev/msm_camera/frame0
-    chmod 0666 /dev/msm_camera/frame1
+    symlink /storage/sdcard /mnt/sdcard
+    symlink /storage/sdcard /sdcard
 
     mkdir /sd-ext 0771 system system
 
     mkdir /custpack
 
+# Add permissions for camera access
+    chmod 0666 /dev/msm_camera/config0
+    chmod 0666 /dev/msm_camera/control0
+    chmod 0666 /dev/msm_camera/frame0
+    chmod 0666 /dev/msm_camera/pic0
+
 on fs
+    mount_all /fstab.brandy 
     mount yaffs2 mtd@system /system rw remount
     mount yaffs2 mtd@custpack /custpack
 

@@ -72,8 +72,8 @@ camera_module_t HAL_MODULE_INFO_SYM = {
       module_api_version: CAMERA_DEVICE_API_VERSION_1_0,
       hal_api_version: 0,
       id: CAMERA_HARDWARE_MODULE_ID,
-      name: "Camera HAL for JB",
-      author: "Raviprasad V Mummidi",
+      name: "Camera HAL for LG MSM7x27",
+      author: "AndroidMeda & Vassilis Tsogkas & Adam Farden & Rashed Abdel-Tawab",
       methods: &camera_module_methods,
       dso: NULL,
       reserved: {0},
@@ -230,7 +230,9 @@ CameraHAL_HandlePreviewData(const android::sp<android::IMemory>& dataPtr,
            (unsigned)offset, size, mHeap != NULL ? mHeap->base() : 0);
 
       mWindow->set_usage(mWindow,
+//#ifndef HWA
                          GRALLOC_USAGE_PMEM_PRIVATE_ADSP |
+//#endif
                          GRALLOC_USAGE_SW_READ_OFTEN);
       retVal = mWindow->set_buffers_geometry(mWindow,
                                              previewWidth, previewHeight,
@@ -550,14 +552,14 @@ qcamera_preview_enabled(struct camera_device * device)
    ALOGV("qcamera_preview_enabled:\n");
    return qCamera->previewEnabled() ? 1 : 0;
 }
-
+/*
 int
 qcamera_store_meta_data_in_buffers(struct camera_device * device, int enable)
 {
    ALOGV("qcamera_store_meta_data_in_buffers:\n");
    return NO_ERROR;
 }
-
+*/
 int 
 qcamera_start_recording(struct camera_device * device)
 {
@@ -680,7 +682,7 @@ int
 qcamera_send_command(struct camera_device * device, int32_t cmd, 
                         int32_t arg0, int32_t arg1)
 {
-   ALOGV("qcamera_send_command: cmd:%d arg0:%d arg1:%d\n",
+   ALOGV("qcamera_send_command: cmd:%d arg0:%d arg1:%d\n", 
         cmd, arg0, arg1);
    return qCamera->sendCommand(cmd, arg0, arg1);
 }
@@ -731,9 +733,9 @@ qcamera_device_open(const hw_module_t* module, const char* name,
 
    void *libcameraHandle;
    int cameraId = atoi(name);
-   signal(SIGFPE,(*sighandle));
+   signal(SIGFPE,(*sighandle)); //@nAa: Bad boy doing hacks
 
-   ALOGD("qcamera_device_open: name:%s device:%p cameraId:%d\n",
+   ALOGD("qcamera_device_open: name:%s device:%p cameraId:%d\n", 
         name, device, cameraId);
 
    libcameraHandle = ::dlopen("libcamera.so", RTLD_NOW);
@@ -780,7 +782,7 @@ qcamera_device_open(const hw_module_t* module, const char* name,
    camera_ops->start_preview              = qcamera_start_preview;
    camera_ops->stop_preview               = qcamera_stop_preview;
    camera_ops->preview_enabled            = qcamera_preview_enabled;
-   camera_ops->store_meta_data_in_buffers = qcamera_store_meta_data_in_buffers;
+   camera_ops->store_meta_data_in_buffers = NULL; //qcamera_store_meta_data_in_buffers;
    camera_ops->start_recording            = qcamera_start_recording;
    camera_ops->stop_recording             = qcamera_stop_recording;
    camera_ops->recording_enabled          = qcamera_recording_enabled;

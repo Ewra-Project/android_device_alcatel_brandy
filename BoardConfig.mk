@@ -1,38 +1,17 @@
-#
-# Copyright (C) 2011 The Android Open-Source Project
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-
-# This variable is set first, so it can be overridden
-# by BoardConfigVendor.mk
-USE_CAMERA_STUB := true
-
-# inherit from the proprietary version
 -include vendor/alcatel/brandy/BoardConfigVendor.mk
 
-# CPU
-TARGET_CPU_ABI := armeabi-v6l
-TARGET_CPU_ABI2 := armeabi
-TARGET_ARCH_VARIANT := armv6-vfp
+# Target
 TARGET_ARCH := arm
-
-# Target and board properties
-TARGET_NO_BOOTLOADER := true
-TARGET_NO_RADIOIMAGE := true
+TARGET_ARCH_LOWMEM := true
+TARGET_ARCH_VARIANT := armv6-vfp
 TARGET_BOARD_PLATFORM := msm7x27
 TARGET_BOOTLOADER_BOARD_NAME := brandy
 TARGET_SPECIFIC_HEADER_PATH := device/alcatel/brandy/include
+TARGET_CPU_ABI := armeabi-v6l
+TARGET_CPU_ABI2 := armeabi
+TARGET_CPU_VARIANT := arm11
+TARGET_NO_BOOTLOADER := true
+TARGET_NO_RADIOIMAGE := true
 COMMON_GLOBAL_CFLAGS += -DTARGET_MSM7x27
 
 # Kernel
@@ -47,16 +26,48 @@ BOARD_KERNEL_CMDLINE := mem=458M console=ttyMSM2,115200n8 androidboot.hardware=b
 BOARD_KERNEL_BASE := 0x13600000
 BOARD_KERNEL_PAGESIZE := 2048
 
+# Partition Sizes
+BOARD_BOOTIMAGE_PARTITION_SIZE := 0x005C0000
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 0x00500000
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 0x0D200000
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 0x09E60000
+BOARD_FLASH_BLOCK_SIZE := 131072
+
+# Graphics
+USE_OPENGL_RENDERER := true
+TARGET_NO_HW_OVERLAY := true
+TARGET_QCOM_DISPLAY_VARIANT := legacy
+BOARD_ADRENO_DECIDE_TEXTURE_TARGET := true
+BOARD_EGL_CFG := device/alcatel/brandy/prebuilt/egl.cfg
+BOARD_EGL_NEEDS_LEGACY_FB := true
+BOARD_NEEDS_MEMORYHEAPPMEM := true
+BOARD_USES_QCOM_HARDWARE := true
+BOARD_USES_QCOM_LIBS := true
+TARGET_NO_HW_VSYNC := false
+COMMON_GLOBAL_CFLAGS += -DANCIENT_GL
+COMMON_GLOBAL_CFLAGS += -DREFRESH_RATE=60
+COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE
+COMMON_GLOBAL_CFLAGS += -DQCOM_ICS_COMPAT
+COMMON_GLOBAL_CFLAGS += -DQCOM_LEGACY_OMX
+COMMON_GLOBAL_CFLAGS += -DQCOM_NO_SECURE_PLAYBACK
+
+# Camera
+TARGET_DISABLE_ARM_PIE := true
+BOARD_USE_NASTY_PTHREAD_CREATE_HACK := true
+BOARD_USES_QCOM_LEGACY_CAM_PARAMS := true
+COMMON_GLOBAL_CFLAGS += -DBINDER_COMPAT
+
 # WiFi
 WPA_SUPPLICANT_VERSION := VER_0_8_X
+BOARD_WLAN_DEVICE := bcm4329
+#BOARD_WEXT_NO_COMBO_SCAN := true
 BOARD_WPA_SUPPLICANT_DRIVER := WEXT
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_wext
-BOARD_WLAN_DEVICE := bcm4329
 WIFI_DRIVER_MODULE_PATH := "/system/lib/modules/bcm4329.ko"
-WIFI_DRIVER_FW_PATH_STA := "/system/etc/wifi/fw_bcm4329.bin"
-WIFI_DRIVER_FW_PATH_AP := "/system/etc/wifi/fw_bcm4329_apsta.bin"
 WIFI_DRIVER_MODULE_ARG := "firmware_path=/system/etc/wifi/fw_bcm4329.bin nvram_path=/system/etc/wifi/nvram.txt"
 WIFI_DRIVER_MODULE_NAME := "bcm4329"
+WIFI_DRIVER_FW_PATH_STA := "/system/etc/wifi/fw_bcm4329.bin"
+WIFI_DRIVER_FW_PATH_AP := "/system/etc/wifi/fw_bcm4329_apsta.bin"
 WIFI_EXT_MODULE_PATH := "/system/lib/modules/librasdioif.ko"
 WIFI_EXT_MODULE_NAME := "librasdioif"
 
@@ -64,82 +75,47 @@ WIFI_EXT_MODULE_NAME := "librasdioif"
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
 
-# Camera
-COMMON_GLOBAL_CFLAGS += -DBINDER_COMPAT -DUSE_GETBUFFERINFO
-BOARD_USE_NASTY_PTHREAD_CREATE_HACK := true
-#BOARD_USES_LEGACY_OVERLAY := true
-TARGET_DISABLE_ARM_PIE := true
-BOARD_USES_QCOM_LEGACY_CAM_PARAMS := true
+# Audio & FM Radio
+TARGET_PROVIDES_LIBAUDIO := true
+BOARD_USES_AUDIO_LEGACY := false
+BOARD_COMBO_DEVICE_SUPPORTED := false
 
 # GPS
-BOARD_USES_QCOM_GPS := true
 BOARD_USES_QCOM_LIBRPC := true
-BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := brandy
+BOARD_USES_QCOM_GPS := true
+BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := default
 BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 50000
+BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE_LEGACY := msm7x27
 
-# QCOM
-BOARD_USES_QCOM_HARDWARE := true
-BOARD_USES_QCOM_LIBS := true
-COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE -DQCOM_LEGACY_OMX -DQCOM_ICS_COMPAT -DQCOM_NO_SECURE_PLAYBACK
-
-# Graphics
-BOARD_EGL_CFG := device/alcatel/brandy/prebuilt/egl.cfg
-BOARD_ADRENO_DECIDE_TEXTURE_TARGET := true
-USE_OPENGL_RENDERER := true
-#TARGET_USES_GENLOCK := true
-TARGET_NO_HW_VSYNC := true
-TARGET_NO_HW_OVERLAY := true
-TARGET_QCOM_DISPLAY_VARIANT := legacy
-BOARD_EGL_NEEDS_LEGACY_FB := true
-BOARD_NEEDS_MEMORYHEAPPMEM := true
-COMMON_GLOBAL_CFLAGS += -DREFRESH_RATE=60
-
-# Legacy ts support
-BOARD_USE_LEGACY_TOUCHSCREEN := true
-
-# Browser & WebKit
-JS_ENGINE := v8
-HTTP := chrome
-WITH_JIT := true
-ENABLE_JSC_JIT := true
-#ENABLE_WEBGL := true
-TARGET_FORCE_CPU_UPLOAD := true
-
-# Libs
-TARGET_PROVIDES_LIBLIGHT := true
+# RIL
 BOARD_PROVIDES_LIBRIL := true
 
+# Lights
+TARGET_PROVIDES_LIBLIGHT := true
+
+# Mass Storage
+TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/usb_mass_storage/lun0/file
+BOARD_UMS_LUNFILE := "/sys/devices/platform/usb_mass_storage/lun0/file"
+
+# Touch screen compatibility
+BOARD_USE_LEGACY_TOUCHSCREEN := true
+
+# Minimal fonts
+SMALLER_FONT_FOOTPRINT := true
+
 # Recovery
+TARGET_RECOVERY_FSTAB := device/alcatel/brandy/fstab.brandy
 TARGET_RECOVERY_INITRC := device/alcatel/brandy/recovery/init.rc
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/alcatel/brandy/recovery/recovery_keys.c
 BOARD_CUSTOM_GRAPHICS := ../../../device/alcatel/brandy/recovery/graphics.c
-BOARD_UMS_LUNFILE := "/sys/devices/platform/usb_mass_storage/lun0/file"
 
-TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/usb_mass_storage/lun0/file
-
-# # cat /proc/mtd
-# dev:     size   erasesize  name
-# mtd0:  005c0000 00020000 "boot"
-# mtd1:  03c00000 00020000 "cache"
-# mtd2:  00500000 00020000 "recovery"
-# mtd3:  000c0000 00020000 "splash"
-# mtd4:  00040000 00020000 "misc"
-# mtd5:  05f00000 00020000 "system"
-# mtd6:  07300000 00020000 "custpack"
-# mtd7:  09e60000 00020000 "userdata"
-# mtd8:  00080000 00020000 "securo"
-# mtd9:  00080000 00020000 "studypara"
-# mtd10: 00080000 00020000 "tracability"
-# mtd11: 000a0000 00020000 "tuningpara"
-# mtd12: 1bae0000 00020000 ""
-# mtd13: 00040000 00020000 "FOTAFLAG"
-# mtd14: 01b40000 00020000 "FOTA"
-
-BOARD_BOOTIMAGE_PARTITION_SIZE := 0x005C0000
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 0x00500000
-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 0x0D200000
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 0x09E60000
-BOARD_FLASH_BLOCK_SIZE := 131072
+# Javascript, Browser and Webkit
+WITH_JIT := true
+ENABLE_JSC_JIT := true
+JS_ENGINE := v8
+HTTP := chrome
+ENABLE_WEBGL := true
+TARGET_FORCE_CPU_UPLOAD := true
 
 # TWRP
 DEVICE_RESOLUTION := 320x480
@@ -150,3 +126,22 @@ TW_BOARD_CUSTOM_GRAPHICS := ../../../device/alcatel/brandy/recovery/twrpgraphics
 TARGET_RECOVERY_PIXEL_FORMAT := "RGB_565"
 TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
 TW_MAX_BRIGHTNESS := 255
+
+# # cat /proc/mtd
+# dev: size erasesize name
+# mtd0: 005c0000 00020000 "boot"
+# mtd1: 03c00000 00020000 "cache"
+# mtd2: 00500000 00020000 "recovery"
+# mtd3: 000c0000 00020000 "splash"
+# mtd4: 00040000 00020000 "misc"
+# mtd5: 05f00000 00020000 "system"
+# mtd6: 07300000 00020000 "custpack"
+# mtd7: 09e60000 00020000 "userdata"
+# mtd8: 00080000 00020000 "securo"
+# mtd9: 00080000 00020000 "studypara"
+# mtd10: 00080000 00020000 "tracability"
+# mtd11: 000a0000 00020000 "tuningpara"
+# mtd12: 1bae0000 00020000 ""
+# mtd13: 00040000 00020000 "FOTAFLAG"
+# mtd14: 01b40000 00020000 "FOTA"
+

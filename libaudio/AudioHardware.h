@@ -1,5 +1,6 @@
 /*
 ** Copyright 2008, The Android Open-Source Project
+** Copyright (c) 2012, Code Aurora Forum. All rights reserved.
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -28,11 +29,20 @@
 extern "C" {
 #include <linux/msm_audio.h>
 #include <linux/msm_audio_voicememo.h>
+#include <linux/msm_audio_aac.h>
+#include <linux/msm_audio_amrnb.h>
+#include <linux/msm_audio_qcp.h>
 }
 
 using namespace android;
 
 namespace android_audio_legacy {
+
+
+#ifdef P500_SPEAKER_IN_CALL_FIX
+#define AudioSystem_SPEAKER_IN_CALL AudioSystem::DEVICE_OUT_PROXY
+#define OutputDevices_SPEAKER_IN_CALL 0x8000
+#endif
 
 // ----------------------------------------------------------------------------
 // Kernel driver interface
@@ -154,7 +164,6 @@ enum tty_modes {
 #define AUDIO_HW_IN_FORMAT (AudioSystem::PCM_16_BIT)  // Default audio input sample format
 // ----------------------------------------------------------------------------
 
-
 class AudioHardware : public  AudioHardwareBase
 {
     class AudioStreamOutMSM72xx;
@@ -167,7 +176,9 @@ public:
 
     virtual status_t    setVoiceVolume(float volume);
     virtual status_t    setMasterVolume(float volume);
-
+#ifdef HAVE_FM_RADIO
+    virtual status_t    setFmVolume(float volume);
+#endif
     virtual status_t    setMode(int mode);
 
     // mic mute
@@ -212,6 +223,9 @@ private:
     uint32_t    getInputSampleRate(uint32_t sampleRate);
     bool        checkOutputStandby();
     status_t    doRouting(AudioStreamInMSM72xx *input);
+#ifdef HAVE_FM_RADIO
+    status_t    setFmOnOff(bool onoff);
+#endif
     AudioStreamInMSM72xx*   getActiveInput_l();
 
     class AudioStreamOutMSM72xx : public AudioStreamOut {
@@ -302,19 +316,22 @@ private:
             bool        mBluetoothNrec;
             uint32_t    mBluetoothId;
             AudioStreamOutMSM72xx*  mOutput;
-            SortedVector <AudioStreamInMSM72xx*>   mInputs;
+            android::SortedVector <AudioStreamInMSM72xx*>   mInputs;
 
             msm_snd_endpoint *mSndEndpoints;
             int mNumSndEndpoints;
             int mCurSndDevice;
             int m7xsnddriverfd;
-            bool        mDualMicEnabled;
-            int         mTtyMode;
-
-            bool        mBuiltinMicSelected;
+            bool mDualMicEnabled;
+            bool mBuiltinMicSelected;
+            int  mTtyMode;
+#ifdef HAVE_FM_RADIO
+            int mFmRadioEnabled;
+            int mFmPrev;
+#endif
 
      friend class AudioStreamInMSM72xx;
-            Mutex       mLock;
+            android::Mutex       mLock;
 };
 
 // ----------------------------------------------------------------------------
